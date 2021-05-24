@@ -50,8 +50,8 @@ open class MessageViewController: UIViewController {
   // MARK: - Animations
 
   /// Animates blur and border view.
-  public func animateLoading() {
-    animate(blurStyle: .light)
+  open func animateLoading() {
+    animate(blurStyle: .regular)
     animate(borderViewAngle: CGFloat(Double.pi/2))
   }
 
@@ -80,7 +80,7 @@ open class MessageViewController: UIViewController {
 
    - Parameter angle: Rotation angle.
    */
-  private func animate(borderViewAngle: CGFloat) {
+  public func animate(borderViewAngle: CGFloat) {
     guard status.state == .processing else {
       borderView.transform = .identity
       return
