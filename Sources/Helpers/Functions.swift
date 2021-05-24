@@ -9,7 +9,7 @@ import AVFoundation
 func imageNamed(_ name: String) -> UIImage {
   let traitCollection = UITraitCollection(displayScale: 3)
 
-    guard let image = UIImage(named: name, in: Bundle.module, compatibleWith: traitCollection) else {
+    guard let image = UIImage(named: name, in: Bundle.main, compatibleWith: traitCollection) else {
     return UIImage()
   }
 
@@ -22,7 +22,7 @@ func imageNamed(_ name: String) -> UIImage {
  - Returns: An image.
  */
 func localizedString(_ key: String) -> String {
-    NSLocalizedString(key, bundle: Bundle.module, comment: key)
+    NSLocalizedString(key, bundle: Bundle.main, comment: key)
 }
 
 /// Checks if the app is running in Simulator.
