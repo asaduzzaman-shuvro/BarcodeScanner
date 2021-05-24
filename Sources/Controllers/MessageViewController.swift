@@ -8,7 +8,7 @@ open class MessageViewController: UIViewController {
   public var errorTintColor: UIColor = .red
   // Customizable state messages.
   public var messages = StateMessageProvider()
-
+    public var blurExffectType: UIBlurEffect.Style = .regular
   // MARK: - UI properties
 
   /// Text label.
@@ -51,7 +51,7 @@ open class MessageViewController: UIViewController {
 
   /// Animates blur and border view.
   open func animateLoading() {
-    animate(blurStyle: .regular)
+    animate(blurStyle: .prominent)
     animate(borderViewAngle: CGFloat(Double.pi/2))
   }
 
