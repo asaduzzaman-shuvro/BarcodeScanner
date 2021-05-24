@@ -18,6 +18,8 @@ open class MessageViewController: UIViewController {
   /// Border view.
   public private(set) lazy var borderView: UIView = self.makeBorderView()
 
+
+    
   /// Blur effect view.
   public private(set) lazy var blurView: UIVisualEffectView = .init(effect: UIBlurEffect(style: .extraLight))
   // Constraints that are activated when the view is used as a footer.
@@ -48,7 +50,7 @@ open class MessageViewController: UIViewController {
   // MARK: - Animations
 
   /// Animates blur and border view.
-  func animateLoading() {
+  public func animateLoading() {
     animate(blurStyle: .light)
     animate(borderViewAngle: CGFloat(Double.pi/2))
   }
@@ -58,7 +60,7 @@ open class MessageViewController: UIViewController {
 
    - Parameter style: The current blur style.
    */
-  private func animate(blurStyle: UIBlurEffect.Style) {
+ public func animate(blurStyle: UIBlurEffect.Style) {
     guard status.state == .processing else { return }
 
     UIView.animate(
@@ -218,4 +220,6 @@ extension MessageViewController {
 
     return constraints
   }
+    
+    
 }
