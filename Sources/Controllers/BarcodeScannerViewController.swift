@@ -181,7 +181,7 @@ open class BarcodeScannerViewController: UIViewController {
 
         self?.messageView.layer.removeAllAnimations()
         if self?.status.state == .processing {
-//          self?.messageViewController.animateLoading()
+          self?.messageViewController.animateLoading()
         }
       }))
   }
@@ -347,6 +347,6 @@ extension BarcodeScannerViewController: CameraViewControllerDelegate {
     }
 
     codeDelegate?.scanner(self, didCaptureCode: code, type: rawType)
-    animateFlash(whenProcessing: isOneTimeSearch)
+//    animateFlash(whenProcessing: isOneTimeSearch)
   }
 }
