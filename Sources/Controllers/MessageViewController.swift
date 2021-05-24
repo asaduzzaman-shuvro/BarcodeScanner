@@ -1,7 +1,7 @@
 import UIKit
 
 /// View controller used for showing info text and loading animation.
-public final class MessageViewController: UIViewController {
+open class MessageViewController: UIViewController {
   // Image tint color for all the states, except for `.notFound`.
   public var regularTintColor: UIColor = .black
   // Image tint color for `.notFound` state.

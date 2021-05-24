@@ -10,6 +10,7 @@ public protocol BarcodeScannerCodeDelegate: class {
     didCaptureCode code: String,
     type: String
   )
+    func scanner(startPrcessing controller: BarcodeScannerViewController)
 }
 
 /// Delegate to report errors.
@@ -139,7 +140,7 @@ open class BarcodeScannerViewController: UIViewController {
     status = Status(state: .scanning, animated: animated)
   }
 
-  private func changeStatus(from oldValue: Status, to newValue: Status) {
+  func changeStatus(from oldValue: Status, to newValue: Status) {
     guard newValue.state != .notFound else {
       messageViewController.status = newValue
       DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
@@ -180,7 +181,7 @@ open class BarcodeScannerViewController: UIViewController {
 
         self?.messageView.layer.removeAllAnimations()
         if self?.status.state == .processing {
-          self?.messageViewController.animateLoading()
+//          self?.messageViewController.animateLoading()
         }
       }))
   }

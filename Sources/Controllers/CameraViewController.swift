@@ -14,7 +14,7 @@ protocol CameraViewControllerDelegate: class {
 }
 
 /// View controller responsible for camera controls and video capturing.
-public final class CameraViewController: UIViewController {
+open class CameraViewController: UIViewController {
   weak var delegate: CameraViewControllerDelegate?
 
   /// Focus view type.
