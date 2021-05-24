@@ -19,7 +19,7 @@ open class MessageViewController: UIViewController {
   public private(set) lazy var borderView: UIView = self.makeBorderView()
 
   /// Blur effect view.
-  private lazy var blurView: UIVisualEffectView = .init(effect: UIBlurEffect(style: .extraLight))
+  public private(set) lazy var blurView: UIVisualEffectView = .init(effect: UIBlurEffect(style: .extraLight))
   // Constraints that are activated when the view is used as a footer.
   private lazy var collapsedConstraints: [NSLayoutConstraint] = self.makeCollapsedConstraints()
   // Constraints that are activated when the view is used for loading animation and error messages.
