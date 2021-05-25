@@ -106,6 +106,7 @@ open class CameraViewController: UIViewController {
         view.layer.addSublayer(videoPreviewLayer)
         view.addSubviews(settingsButton, flashButton, focusView, cameraButton)
         
+        barCodeFocusViewType = self.cameraConfig.focusViewType
         torchMode = .off
         focusView.isHidden = true
         setupCamera()
