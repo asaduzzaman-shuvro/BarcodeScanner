@@ -31,9 +31,11 @@ public extension ScannerConfig {
 
 public struct CameraViewConfig {
     public var hideFocusAfterScanning: Bool = true
+    public var focusViewType : FocusViewType = .oneDimension
     
-    public init(hideFocusAfterScanning: Bool  ) {
+    public init(hideFocusAfterScanning: Bool , focusViewType type: FocusViewType = .oneDimension ) {
         self.hideFocusAfterScanning = hideFocusAfterScanning
+        self.focusViewType = type
     }
 
 }
