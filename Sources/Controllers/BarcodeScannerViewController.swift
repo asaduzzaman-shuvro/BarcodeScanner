@@ -4,7 +4,7 @@ import AVFoundation
 // MARK: - Delegates
 
 /// Delegate to handle the captured code.
-public protocol BarcodeScannerCodeDelegate: class {
+public protocol BarcodeScannerCodeDelegate: AnyObject {
     func scanner(
         _ controller: BarcodeScannerViewController,
         didCaptureCode code: String,
@@ -14,12 +14,12 @@ public protocol BarcodeScannerCodeDelegate: class {
 }
 
 /// Delegate to report errors.
-public protocol BarcodeScannerErrorDelegate: class {
+public protocol BarcodeScannerErrorDelegate: AnyObject {
     func scanner(_ controller: BarcodeScannerViewController, didReceiveError error: Error)
 }
 
 /// Delegate to dismiss barcode scanner when the close button has been pressed.
-public protocol BarcodeScannerDismissalDelegate: class {
+public protocol BarcodeScannerDismissalDelegate: AnyObject {
     func scannerDidDismiss(_ controller: BarcodeScannerViewController)
 }
 
@@ -34,7 +34,7 @@ public protocol BarcodeScannerDismissalDelegate: class {
  */
 open class BarcodeScannerViewController: UIViewController {
     private static let footerHeight: CGFloat = 75
-    public var hideFooterView = false
+    private var hideFooterView = false
     
     // MARK: - Public properties
     
@@ -58,6 +58,24 @@ open class BarcodeScannerViewController: UIViewController {
         didSet {
             cameraViewController.metadata = metadata
         }
+    }
+    
+    private var config: Config = Config()
+    
+    public convenience init(withConfig config: Config) {
+        self.init(nibName: nil, bundle: nil)
+        self.config = config
+        cameraViewController.cameraConfig = config.cameraViewConfig
+        messageViewController.messageConfig = config.messageViewConfig
+        headerViewController.headerConfig = config.headerViewConfig
+    }
+    
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    required public init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     
     // MARK: - Private properties
@@ -286,7 +304,7 @@ private extension BarcodeScannerViewController {
             messageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             messageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             messageView.heightAnchor.constraint(
-                equalToConstant: hideFooterView ? 0 : -BarcodeScannerViewController.footerHeight
+                equalToConstant: 0
             )
         ]
     }
@@ -349,5 +367,18 @@ extension BarcodeScannerViewController: CameraViewControllerDelegate {
         
         codeDelegate?.scanner(self, didCaptureCode: code, type: rawType)
         animateFlash(whenProcessing: isOneTimeSearch)
+    }
+}
+
+
+public extension  BarcodeScannerViewController {
+    func addCustomLoader(loader: UIView) {
+        self.view.addSubview(loader)
+        NSLayoutConstraint.activate([
+            loader.widthAnchor.constraint(equalToConstant: 150),
+            loader.heightAnchor.constraint(equalToConstant: 150),
+            loader.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            loader.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+        ])
     }
 }

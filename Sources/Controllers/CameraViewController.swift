@@ -2,7 +2,7 @@ import UIKit
 import AVFoundation
 
 /// Delegate to handle camera setup and video capturing.
-protocol CameraViewControllerDelegate: class {
+protocol CameraViewControllerDelegate: AnyObject {
     func cameraViewControllerDidSetupCaptureSession(_ controller: CameraViewController)
     func cameraViewControllerDidFailToSetupCaptureSession(_ controller: CameraViewController)
     func cameraViewController(_ controller: CameraViewController, didReceiveError error: Error)
@@ -26,6 +26,10 @@ open class CameraViewController: UIViewController {
             cameraButton.isHidden = showsCameraButton
         }
     }
+    
+    var cameraConfig: CameraViewConfig = CameraViewConfig(hideFocusAfterScanning: false)
+    
+    
     /// `AVCaptureMetadataOutput` metadata object types.
     var metadata = [AVMetadataObject.ObjectType]()
     
@@ -148,7 +152,7 @@ open class CameraViewController: UIViewController {
         
         torchMode = .off
         captureSession.stopRunning()
-        focusView.isHidden = true
+        focusView.isHidden = self.cameraConfig.hideFocusAfterScanning
         flashButton.isHidden = true
         cameraButton.isHidden = true
     }

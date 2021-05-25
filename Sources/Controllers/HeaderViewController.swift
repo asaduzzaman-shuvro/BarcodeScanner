@@ -1,7 +1,7 @@
 import UIKit
 
 /// Delegate to handle touch event of the close button.
-protocol HeaderViewControllerDelegate: class {
+protocol HeaderViewControllerDelegate: AnyObject {
   func headerViewControllerDidTapCloseButton(_ controller: HeaderViewController)
 }
 
@@ -21,6 +21,9 @@ public final class HeaderViewController: UIViewController {
 
   // MARK: - View lifecycle
 
+    var headerConfig = HeaderViewConfig(closeButtonTitle: "", navTitle: "")
+    
+    
   public override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -29,6 +32,12 @@ public final class HeaderViewController: UIViewController {
 
     view.addSubview(navigationBar)
     setupConstraints()
+    
+    self.closeButton.setTitle(headerConfig.closeButtonTitle, for: .normal)
+    self.closeButton.sizeToFit()
+    
+    self.titleLabel.text = self.headerConfig.navTitle
+    self.titleLabel.sizeToFit()
   }
 
   // MARK: - Actions

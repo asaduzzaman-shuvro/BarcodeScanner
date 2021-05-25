@@ -30,12 +30,19 @@ public final class MessageViewController: UIViewController {
         }
     }
     
+    var messageConfig: MessageViewConfig = MessageViewConfig(showDefaultLoader: true, blurViewAlpha: 1.0)
+    
+    
     // MARK: - View lifecycle
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(blurView)
-        blurView.contentView.addSubviews(textLabel, imageView, imageBorderView)
-        blurView.alpha = 0.6
+
+        if messageConfig.showDefaultLoader {
+            blurView.contentView.addSubviews(textLabel, imageView, imageBorderView)
+        }
+        
+        blurView.alpha = messageConfig.blurViewAlpha
         handleStatusUpdate()
     }
     
@@ -160,6 +167,9 @@ private extension MessageViewController {
 // MARK: - Layout
 extension MessageViewController {
     private func makeExpandedConstraints() -> [NSLayoutConstraint] {
+        guard self.messageConfig.showDefaultLoader else {
+            return []
+        }
         let padding: CGFloat = 10
         let borderSize: CGFloat = 51
         
@@ -181,6 +191,10 @@ extension MessageViewController {
     }
     
     private func makeCollapsedConstraints() -> [NSLayoutConstraint] {
+        guard self.messageConfig.showDefaultLoader else {
+            return []
+        }
+        
         let padding: CGFloat = 10
         var constraints = [
             imageView.topAnchor.constraint(equalTo: blurView.topAnchor, constant: 18),
