@@ -60,9 +60,9 @@ open class BarcodeScannerViewController: UIViewController {
         }
     }
     
-    private var config: Config = Config()
+    private var config: ScannerConfig = ScannerConfig()
     
-    public convenience init(withConfig config: Config) {
+    public convenience init(withConfig config: ScannerConfig) {
         self.init(nibName: nil, bundle: nil)
         self.config = config
         cameraViewController.cameraConfig = config.cameraViewConfig

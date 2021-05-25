@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25E89417265D1F3D00E5B947 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E89416265D1F3D00E5B947 /* Config.swift */; };
+		25E89417265D1F3D00E5B947 /* ScannerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E89416265D1F3D00E5B947 /* ScannerConfig.swift */; };
 		2DBF9E0E1F169DEF006B5AA8 /* FocusViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF9E0D1F169DEF006B5AA8 /* FocusViewType.swift */; };
 		CE8C0771252FBBAF007FF4A4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE8C0770252FBBAF007FF4A4 /* Images.xcassets */; };
 		D504555F1FD8714700E46826 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D504555E1FD8714700E46826 /* UIView+Extensions.swift */; };
@@ -25,7 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		25E89416265D1F3D00E5B947 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		25E89416265D1F3D00E5B947 /* ScannerConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerConfig.swift; sourceTree = "<group>"; };
 		2DBF9E0D1F169DEF006B5AA8 /* FocusViewType.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = FocusViewType.swift; sourceTree = "<group>"; tabWidth = 2; };
 		CE8C0770252FBBAF007FF4A4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D504555E1FD8714700E46826 /* UIView+Extensions.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; tabWidth = 2; };
@@ -125,7 +125,7 @@
 		D5CB37842019477900B9319D /* DataStructures */ = {
 			isa = PBXGroup;
 			children = (
-				25E89416265D1F3D00E5B947 /* Config.swift */,
+				25E89416265D1F3D00E5B947 /* ScannerConfig.swift */,
 				D5FC8AD61D252A12004BED88 /* State.swift */,
 				D5C4E08D1CA0BFB9008D9269 /* TorchMode.swift */,
 				2DBF9E0D1F169DEF006B5AA8 /* FocusViewType.swift */,
@@ -226,7 +226,7 @@
 				D5C4E08F1CA0BFB9008D9269 /* TorchMode.swift in Sources */,
 				D55281C720168E7000FF3CDD /* NSLayoutConstraint+Extensions.swift in Sources */,
 				D55281BF20167DB400FF3CDD /* UIViewController+Extensions.swift in Sources */,
-				25E89417265D1F3D00E5B947 /* Config.swift in Sources */,
+				25E89417265D1F3D00E5B947 /* ScannerConfig.swift in Sources */,
 				D55281BA2016770800FF3CDD /* CameraViewController.swift in Sources */,
 				D5F1C1C91C9C5113001E17A6 /* Functions.swift in Sources */,
 				D55281B8201675D500FF3CDD /* MessageViewController.swift in Sources */,

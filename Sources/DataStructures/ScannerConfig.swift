@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public struct Config {
+public struct ScannerConfig {
     public var cameraViewConfig: CameraViewConfig
     public var messageViewConfig: MessageViewConfig
     public var headerViewConfig: HeaderViewConfig
@@ -21,7 +21,7 @@ public struct Config {
     }
 }
 
-public extension Config {
+public extension ScannerConfig {
     init() {
         self.cameraViewConfig = CameraViewConfig(hideFocusAfterScanning: false)
         self.messageViewConfig = MessageViewConfig(showDefaultLoader: true, blurViewAlpha: 1)
