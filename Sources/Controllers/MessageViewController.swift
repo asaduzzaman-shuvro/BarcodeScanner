@@ -38,7 +38,8 @@ open class MessageViewController: UIViewController {
   public override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(blurView)
-    blurView.contentView.addSubviews(textLabel, imageView, borderView)
+    view.addSubview(imageView)
+    view.addSubview(textLabel)
     handleStatusUpdate()
   }
 
@@ -51,7 +52,7 @@ open class MessageViewController: UIViewController {
 
   /// Animates blur and border view.
   open func animateLoading() {
-    animate(blurStyle: .prominent)
+    animate(blurStyle: self.blurExffectType)
     animate(borderViewAngle: CGFloat(Double.pi/2))
   }
 
