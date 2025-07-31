@@ -60,7 +60,7 @@ open class BarcodeScannerViewController: UIViewController {
         }
     }
     
-    private var config: ScannerConfig = ScannerConfig()
+    private var config: ScannerConfig = .default()
     
     public convenience init(withConfig config: ScannerConfig) {
         self.init(nibName: nil, bundle: nil)
@@ -351,6 +351,14 @@ extension BarcodeScannerViewController: CameraViewControllerDelegate {
             var code = metadataObj.stringValue,
             metadata.contains(metadataObj.type)
         else { return }
+        
+        if metadataObj.type == AVMetadataObject.ObjectType.qr {
+            messageView.isHidden = true
+            cameraViewController.showInfo { [weak self] in
+                self?.reset()
+            }
+            return
+        }
         
         if isOneTimeSearch {
             locked = true
