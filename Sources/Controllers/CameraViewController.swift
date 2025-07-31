@@ -27,8 +27,16 @@ open class CameraViewController: UIViewController {
         }
     }
     
-    var cameraConfig: CameraViewConfig = CameraViewConfig(hideFocusAfterScanning: false)
+    public var cameraConfig: CameraViewConfig = .default() {
+        didSet {
+            infoMessageLabel.attributedText = cameraConfig.infoMessageConfig.message
+        }
+    }
     
+    convenience init(cameraConfig: CameraViewConfig) {
+        self.init()
+        self.cameraConfig = cameraConfig
+    }
     
     /// `AVCaptureMetadataOutput` metadata object types.
     var metadata = [AVMetadataObject.ObjectType]()
@@ -84,6 +92,15 @@ open class CameraViewController: UIViewController {
         return AVCaptureDevice.default(for: .video)
     }
     
+    private var infoMessageLabel: UILabel = {
+        let messageLabel = UILabel()
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.numberOfLines = 0
+        messageLabel.isHidden = true
+//        messageLabel.backgroundColor = .lightGray
+        return messageLabel
+    }()
+    
     // MARK: - Initialization
     
     deinit {
@@ -104,8 +121,8 @@ open class CameraViewController: UIViewController {
         }
         
         view.layer.addSublayer(videoPreviewLayer)
-        view.addSubviews(settingsButton, flashButton, focusView, cameraButton)
-        
+        view.addSubviews(settingsButton, flashButton, focusView, cameraButton, infoMessageLabel)
+                
         barCodeFocusViewType = self.cameraConfig.focusViewType
         torchMode = .off
         focusView.isHidden = true
@@ -140,7 +157,9 @@ open class CameraViewController: UIViewController {
         }
         
         torchMode = .off
-        captureSession.startRunning()
+        DispatchQueue.global().async {
+            self.captureSession.startRunning()
+        }
         focusView.isHidden = false
         flashButton.isHidden = captureDevice?.position == .front
         cameraButton.isHidden = !showsCameraButton
@@ -156,6 +175,26 @@ open class CameraViewController: UIViewController {
         focusView.isHidden = self.cameraConfig.hideFocusAfterScanning
         flashButton.isHidden = true
         cameraButton.isHidden = true
+    }
+    
+    private var alreadyShowedMessage: Bool = false
+    
+    func showInfo(completion: @escaping(() -> Void)) {
+        guard !alreadyShowedMessage else {
+            return
+        }
+        alreadyShowedMessage = true
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.3) {
+                self.infoMessageLabel.textAlignment = .center
+                self.infoMessageLabel.isHidden = false
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+                self.infoMessageLabel.isHidden = true
+                self.alreadyShowedMessage = false
+                completion()
+            })
+        }
     }
     
     // MARK: - Actions
@@ -374,6 +413,14 @@ private extension CameraViewController {
         ]
         
         NSLayoutConstraint.activate(regularFocusViewConstraints)
+        
+        
+        NSLayoutConstraint.activate([
+            infoMessageLabel.topAnchor.constraint(equalTo: focusView.bottomAnchor, constant: 8),
+            infoMessageLabel.leadingAnchor.constraint(equalTo: focusView.leadingAnchor, constant: 4),
+            infoMessageLabel.trailingAnchor.constraint(equalTo: focusView.trailingAnchor, constant: -4),
+            focusView.centerXAnchor.constraint(equalTo: infoMessageLabel.centerXAnchor),
+        ])
     }
     
     func setupVideoPreviewLayerOrientation() {
