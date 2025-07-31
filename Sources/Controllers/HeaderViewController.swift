@@ -21,7 +21,7 @@ public final class HeaderViewController: UIViewController {
 
   // MARK: - View lifecycle
 
-    var headerConfig = HeaderViewConfig(closeButtonTitle: "", navTitle: "")
+    var headerConfig: HeaderViewConfig = .default()
     
     
   public override func viewDidLoad() {

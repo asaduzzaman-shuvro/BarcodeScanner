@@ -30,7 +30,7 @@ public final class MessageViewController: UIViewController {
         }
     }
     
-    var messageConfig: MessageViewConfig = MessageViewConfig(showDefaultLoader: true, blurViewAlpha: 1.0)
+    var messageConfig: MessageViewConfig = .default()
     
     
     // MARK: - View lifecycle
