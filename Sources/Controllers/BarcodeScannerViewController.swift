@@ -262,12 +262,19 @@ private extension BarcodeScannerViewController {
         constraintsActivated = true
         let cameraView = cameraViewController.view!
         
+        let constant: CGFloat
+        if #available(iOS 26.0, *) {
+            constant = 0
+        } else {
+            constant = hideFooterView ? 0 : -BarcodeScannerViewController.footerHeight
+        }
+
         NSLayoutConstraint.activate(
             cameraView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             cameraView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             cameraView.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor,
-                constant: hideFooterView ? 0 : -BarcodeScannerViewController.footerHeight
+                constant: constant
             )
         )
         

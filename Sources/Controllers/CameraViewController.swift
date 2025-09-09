@@ -97,7 +97,6 @@ open class CameraViewController: UIViewController {
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.numberOfLines = 0
         messageLabel.isHidden = true
-//        messageLabel.backgroundColor = .lightGray
         return messageLabel
     }()
     
@@ -451,10 +450,18 @@ private extension CameraViewController {
 
 private extension CameraViewController {
     func makeFocusView() -> UIView {
+        
+        let cornerRadius: CGFloat
+        if #available(iOS 26.0, *) {
+            cornerRadius = 24
+        } else {
+            cornerRadius = 5
+        }
+        
         let view = UIView()
         view.layer.borderColor = UIColor.white.cgColor
         view.layer.borderWidth = 2
-        view.layer.cornerRadius = 5
+        view.layer.cornerRadius = cornerRadius
         view.layer.shadowColor = UIColor.white.cgColor
         view.layer.shadowRadius = 10.0
         view.layer.shadowOpacity = 0.9
