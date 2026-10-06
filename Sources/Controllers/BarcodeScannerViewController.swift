@@ -347,42 +347,38 @@ extension BarcodeScannerViewController: CameraViewControllerDelegate {
             }
         }
     }
-    
-    func cameraViewController(_ controller: CameraViewController,
-                              didOutput metadataObjects: [AVMetadataObject]) {
-        guard !locked && isVisible else { return }
-        guard !metadataObjects.isEmpty else { return }
-        
-        guard
-            let metadataObj = metadataObjects[0] as? AVMetadataMachineReadableCodeObject,
-            var code = metadataObj.stringValue,
-            metadata.contains(metadataObj.type)
-        else { return }
-        
-        if metadataObj.type == AVMetadataObject.ObjectType.qr {
-            messageView.isHidden = true
-            cameraViewController.showInfo { [weak self] in
-                self?.reset()
-            }
-            return
-        }
-        
-        if isOneTimeSearch {
-            locked = true
-        }
-        
-        var rawType = metadataObj.type.rawValue
-        
-        // UPC-A is an EAN-13 barcode with a zero prefix.
-        // See: https://stackoverflow.com/questions/22767584/ios7-barcode-scanner-api-adds-a-zero-to-upca-barcode-format
-        if metadataObj.type == AVMetadataObject.ObjectType.ean13 && code.hasPrefix("0") {
-            code = String(code.dropFirst())
-            rawType = AVMetadataObject.ObjectType.upca.rawValue
-        }
-        
-        codeDelegate?.scanner(self, didCaptureCode: code, type: rawType)
-        animateFlash(whenProcessing: isOneTimeSearch)
-    }
+	
+	func cameraViewController(_ controller: CameraViewController,
+							  didOutput metadataObjects: [AVMetadataObject]) {
+		guard !locked && isVisible else { return }
+
+		let readableCodes = metadataObjects
+			.compactMap { $0 as? AVMetadataMachineReadableCodeObject }
+			.filter { metadata.contains($0.type) && $0.stringValue != nil }
+
+		guard let metadataObj = readableCodes.first(where: { $0.type != .qr }) ?? readableCodes.first,
+			  var code = metadataObj.stringValue
+		else { return }
+
+		if metadataObj.type == .qr {
+			messageView.isHidden = true
+			cameraViewController.showInfo { [weak self] in self?.reset() }
+			return
+		}
+
+		if isOneTimeSearch { locked = true }
+
+		var rawType = metadataObj.type.rawValue
+		// UPC-A is an EAN-13 barcode with a zero prefix.
+		// See: https://stackoverflow.com/questions/22767584/ios7-barcode-scanner-api-adds-a-zero-to-upca-barcode-format
+		if metadataObj.type == .ean13 && code.hasPrefix("0") {
+			code = String(code.dropFirst())
+			rawType = AVMetadataObject.ObjectType.upca.rawValue
+		}
+		
+		codeDelegate?.scanner(self, didCaptureCode: code, type: rawType)
+		animateFlash(whenProcessing: isOneTimeSearch)
+	}
 }
 
 
